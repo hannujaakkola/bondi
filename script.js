@@ -166,24 +166,18 @@ function start() {
   }, 2 * 1000)
 }
 
-var el = document.getElementById('home')
-swipedetect(el, function(swipedir)
-{
-    // swipedir contains either "none", "left", "right", "top", or "down"
-    App.controller('home', function (page) {
-  // put stuff here
-    });
-
-    App.controller('page2', function (page) {
-  // put stuff here
-    });
-    if (swipedir =='right')
-    {
-        alert('You just swiped right!')
-    }
-})
-
 App.controller('map', function (page) {
   setTimeout(initMap, 0) //wait for #map render
 });
 App.load('home');
+
+
+swipedetect(document.getElementById('home'), function(swipedir)
+{
+  if (swipedir === 'left') {
+    App.load('page2')
+  }
+  if (swipedir === 'right') {
+    App.load('map')
+  }
+})

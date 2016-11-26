@@ -97,7 +97,9 @@
         <div class="map-title">Where are you going?</div>
 
         <div class="address">
-          <input type="text" placeholder="Destination address" id="destination">
+          <form onsubmit="javascript:addDestination()">
+            <input type="text" placeholder="Destination address" id="destination">
+          </form>
         </div>
         <div id="ok" onclick="addDestination()"><img src="images/OK_small.png"></div>
       </div>
@@ -128,7 +130,6 @@
           <div class="content">
             <p>This is your stop</p>
             <p>Ta Ta!</p>
-            <div class="app-button" data-target="home">Take a new Bondi</div>
           </div>
         </div>
       </div>
