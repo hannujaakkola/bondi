@@ -6,7 +6,7 @@ var destination
 var destinationLocation
 var map
 var mapTitle
-
+var theBusHasCapasity=true;
 
 
 function addDestination() {
@@ -174,6 +174,14 @@ function addBus(route, busLocation) {
   buses.push(bus)
 
   window.setInterval(function() {
+    if(theBusHasCapasity===true)
+    {
+      bus.setIcon('images/BondiBusGreen_SuperSmall.png')
+    }
+    if(theBusHasCapasity===false)
+    {
+      bus.setIcon('images/BondiBusGreen_supersmall.png')
+    }
     busLocation += parseInt(Math.random() + .8) // 80% of time
     if (busLocation > route.length) {
       busLocation = 0
