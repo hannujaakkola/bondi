@@ -12,9 +12,10 @@
         line-height: 2em;
         font-family: 'Fredoka One', sans-serif;
         color: #fff;
+        box-sizing: border-box;
       }
 
-      .map-title {
+      .top-title {
         height: 10vh;
         line-height: 10vh;
         font-family: 'Pacifico', sans-serif;
@@ -64,6 +65,19 @@
         font-size: 24px;
       }
 
+      .buttons {
+        text-align: center;
+        position: absolute;
+        top: 35vh;
+        width: 100%;
+      }
+
+      .buttons .half {
+        float: left;
+        width: 30%;
+        padding: 10%;
+      }
+
       .flex-center {
         display: flex;
         align-items: center;
@@ -85,16 +99,25 @@
   <body>
     <div class="app-page" data-page="home" id="home">
       <div class="app-content">
-        <div class="app-section">
-          <div class="app-button" data-target="map">Map</div>
-          <div class="app-button" data-target="page2">Address</div>
+        <div class="top-title">Bondi</div>
+        <div class="top-title">Let us take you there</div>
+
+        <div class="buttons">
+          <div class="half">
+            <div data-target="map">Map</div>
+            <img src="images/ArrowLeft_small.png">
+          </div>
+          <div class="half">
+            <div data-target="page2">Address</div>
+            <img src="images/ArrowRight_small.png">
+          </div>
         </div>
       </div>
     </div>
 
     <div class="app-page" data-page="page2">
       <div class="app-content">
-        <div class="map-title">Where are you going?</div>
+        <div class="top-title">Where are you going?</div>
 
         <div class="address">
           <form onsubmit="javascript:addDestination()">
@@ -107,7 +130,7 @@
 
     <div class="app-page" data-page="map">
       <div class="app-content">
-        <div id="map-title" class="map-title">Where are you going?</div>
+        <div id="map-title" class="top-title">Where are you going?</div>
         <div id="map"></div>
         <div id="ok" onclick="start()"><img src="images/OK_small.png"></div>
       </div>
