@@ -1,0 +1,10 @@
+var canvas = document.getElementById('stage');
+canvas.width = window.innerWidth*3;
+canvas.height = window.innerHeight;
+canvas.style.background = 'url(images/MainWindow.jpg)';
+var ctx = canvas.getContext('2d');
+var img = new Image();
+img.src = srcu;
+img.onload = function () {
+    --n || oplach();
+}
