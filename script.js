@@ -31,14 +31,6 @@ function mapReady() {
     new google.maps.LatLng(60.168894, 24.944539),
     new google.maps.LatLng(60.168752, 24.941609),
   ]
-}
-
-function initMap() {
-  mapTitle = document.getElementById('map-title')
-
-  var directionPolylineOptions = new google.maps.Polyline({
-    strokeColor: '#3DD3A1',
-  });
 
   var busPolylineOptions = new google.maps.Polyline({
     strokeColor: '#000',
@@ -48,6 +40,14 @@ function initMap() {
 
   directionsService = new google.maps.DirectionsService;
   busRouteDisplay = new google.maps.DirectionsRenderer({preserveViewport: true, suppressMarkers: true, polylineOptions: busPolylineOptions });
+}
+
+function initMap() {
+  mapTitle = document.getElementById('map-title')
+
+  var directionPolylineOptions = new google.maps.Polyline({
+    strokeColor: '#3DD3A1',
+  });
   var geocoder = new google.maps.Geocoder()
 
   preserveViewport = true
