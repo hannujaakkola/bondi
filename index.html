@@ -4,9 +4,13 @@
     <title>Bondi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="app.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Pacifico" rel="stylesheet">
     <style>
+      #map-title {
+        height: 5vh;
+      }
       #map {
-        height: 90%;
+        height: 95vh;
       }
     </style>
   </head>
@@ -30,6 +34,7 @@
 
     <div class="app-page" data-page="map">
       <div class="app-content">
+        <div id="map-title">Take me there</div>
         <div id="map"></div>
         <div class="app-button" data-target="page4">OK</div>
       </div>
