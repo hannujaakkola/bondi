@@ -158,12 +158,13 @@ function start() {
   window.setTimeout(function() {
     App.load('page4');
     window.setTimeout(function() {
+      navigator.vibrate([1000, 1000, 1000])
       App.load('page5')
       window.setTimeout(function() {
         App.load('home')
-      }, 2 * 1000)
-    }, 2 * 1000)
-  }, 2 * 1000)
+      }, 10 * 1000)
+    }, 5 * 1000)
+  }, 5 * 1000)
 }
 
 App.controller('map', function (page) {

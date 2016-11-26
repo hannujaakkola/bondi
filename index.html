@@ -27,6 +27,7 @@
       }
 
       .top-title.fredoka {
+        margin-top: 20px;
         font-family: 'Fredoka One', sans-serif;
         text-transform: uppercase;
         font-size: 48px;
@@ -111,6 +112,45 @@
       .content p {
         text-transform: uppercase;
       }
+
+      .bottom-arrows {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .bottom-arrows img {
+        padding: 0 3%;
+        position: relative;
+        z-index: 9999;
+      }
+
+      .bottom-arrows .left-bg {
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 0;
+        bottom: -160px;
+        border-top: 150px solid transparent;
+        border-bottom: 150px solid transparent;
+        border-left: 150px solid #EF4D7F;
+      }
+
+      .bottom-arrows .right-bg {
+        width: 0;
+        height: 0;
+        position: absolute;
+        bottom: -150px;
+        right: 0;
+        border-top: 150px solid transparent;
+        border-bottom: 150px solid transparent;
+        border-right: 150px solid #3DD3A1;
+      }
+
+      .bottom-arrows .right {
+        float: right;
+      }
     </style>
   </head>
 
@@ -142,7 +182,13 @@
             <input type="text" placeholder="Destination address" id="destination">
           </form>
         </div>
-        <div id="ok" onclick="addDestination()"><img src="images/OK_small.png"></div>
+
+        <div class="bottom-arrows">
+          <div class="left-bg"></div>
+          <img class="left" src="images/ArrowLeft_small.png" onclick="App.load('home')">
+        </div>
+
+        <div id="ok"><img src="images/OK_small.png" onclick="addDestination()"></div>
       </div>
     </div>
 
@@ -150,7 +196,13 @@
       <div class="app-content">
         <div id="map-title" class="top-title">Where are you going?</div>
         <div id="map"></div>
-        <div id="ok" onclick="start()"><img src="images/OK_small.png"></div>
+
+        <div class="bottom-arrows">
+          <div class="left-bg"></div>
+          <img class="left" src="images/ArrowLeft_small.png" onclick="App.load('home')">
+        </div>
+
+        <div id="ok"><img src="images/OK_small.png" onclick="start()"></div>
       </div>
     </div>
 
@@ -159,7 +211,7 @@
         <div class="flex-center">
           <div class="content">
             <p>You're stopping in 7 minutes</p>
-            <div class="app-button" data-target="page5">I want so stop now</div>
+            <!--<div class="app-button" data-target="page5">I want so stop now</div>-->
           </div>
         </div>
       </div>
