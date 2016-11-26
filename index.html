@@ -6,17 +6,84 @@
     <link rel="stylesheet" href="app.min.css">
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Pacifico" rel="stylesheet">
     <style>
-      #map-title {
-        height: 5vh;
+      body, .app-page, .app-content {
+        background: #B77DAF;
+        font-size: 24px;
+        line-height: 2em;
+        font-family: 'Fredoka One', sans-serif;
+        color: #fff;
       }
+
+      .map-title {
+        height: 10vh;
+        line-height: 10vh;
+        font-family: 'Pacifico', sans-serif;
+        text-align: center;
+        color: white;
+        font-size: 24px;
+      }
+
       #map {
-        height: 95vh;
+        height: 90vh;
+      }
+
+      #ok {
+        position: absolute;
+        z-index: 1000;
+        bottom: 3%;
+        width: 100%;
+        text-align: center;
+      }
+
+      .address {
+        text-align: center;
+      }
+
+      input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color: #55575b;
+      }
+      input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #55575b;
+
+         opacity:  1;
+      }
+      input::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #55575b;
+        color: #55575b;
+       opacity:  1;
+      }
+      input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #55575b;
+      }
+
+      .address input {
+        font-family: 'Fredoka One', sans-serif;
+        color: #55575b;
+        padding: 20px;
+        width: 80%;
+        font-size: 24px;
+      }
+
+      .flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .flex-center .content {
+        width: 80%;
+        text-align: center;
+      }
+
+      .content p {
+        text-transform: uppercase;
       }
     </style>
   </head>
 
   <body>
-    <div class="app-page" data-page="home">
+    <div class="app-page" data-page="home" id="home">
       <div class="app-content">
         <div class="app-section">
           <div class="app-button" data-target="map">Map</div>
@@ -27,35 +94,49 @@
 
     <div class="app-page" data-page="page2">
       <div class="app-content">
-        <input type="text" placeholder="A place" id="destination">
-        <div class="app-button" onclick="addDestination()" data-target="map">Take me there</div>
+        <div class="map-title">Where are you going?</div>
+
+        <div class="address">
+          <input type="text" placeholder="Destination address" id="destination">
+        </div>
+        <div id="ok" onclick="addDestination()"><img src="images/OK_small.png"></div>
       </div>
     </div>
 
     <div class="app-page" data-page="map">
       <div class="app-content">
-        <div id="map-title">Take me there</div>
+        <div id="map-title" class="map-title">Where are you going?</div>
         <div id="map"></div>
-        <div class="app-button" data-target="page4">OK</div>
+        <div id="ok" onclick="start()"><img src="images/OK_small.png"></div>
       </div>
     </div>
 
     <div class="app-page" data-page="page4">
       <div class="app-content">
-        U are bus
-        <div class="app-button" data-target="page5">GET ME OUT</div>
+        <div class="flex-center">
+          <div class="content">
+            <p>You're stopping in 7 minutes</p>
+            <div class="app-button" data-target="page5">I want so stop now</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="app-page" data-page="page5">
       <div class="app-content">
-        This be ur stop
-        <div class="app-button" data-target="home">Yay</div>
+        <div class="flex-center">
+          <div class="content">
+            <p>This is your stop</p>
+            <p>Ta Ta!</p>
+            <div class="app-button" data-target="home">Take a new Bondi</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
+    <script src="SwipeEngineExample.js"></script>
     <script src="script.js"></script>
 
     <script async defer

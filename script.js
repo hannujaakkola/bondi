@@ -11,6 +11,7 @@ var mapTitle
 
 function addDestination() {
   destination = document.getElementById('destination').value + ', helsinki'
+  App.load('map');
 }
 
 function mapReady() {
@@ -33,6 +34,8 @@ function mapReady() {
 }
 
 function initMap() {
+  mapTitle = document.getElementById('map-title')
+
   var directionPolylineOptions = new google.maps.Polyline({
     strokeColor: '#3DD3A1',
   });
@@ -48,7 +51,10 @@ function initMap() {
   busRouteDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true, polylineOptions: busPolylineOptions });
   var geocoder = new google.maps.Geocoder()
 
-  geocode(geocoder, destination)
+  console.log(destination);
+  if (destination) {
+    geocode(geocoder, destination)
+  }
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -57,8 +63,6 @@ function initMap() {
   });
   busRouteDisplay.setMap(map);
   directionsDisplay.setMap(map);
-
-  mapTitle = document.getElementById('map-title')
 
   google.maps.event.addListener(map, "click", function (e) {
     destinationLocation = e.latLng
@@ -86,11 +90,14 @@ function calculateStop(endLocation) {
 }
 
 function geocode(geocoder, address) {
+  console.log(address);
   geocoder.geocode({ 'address': address }, function (response, status) {
+    console.log(response);
     if (status == google.maps.GeocoderStatus.OK) {
       destinationLocation = response[0].geometry.location
       var stop = calculateStop(response[0].geometry.location)
 
+      calculateAndDisplayBusRoute();
       calculateAndDisplayRoute(stop);
     }
   })
@@ -120,18 +127,17 @@ function calculateAndDisplayRoute(stop) {
     travelMode: 'WALKING',
   }, function(response, status) {
     if (status === 'OK') {
-      mapTitle.innerHTML = 'Walk to the first stop'
       directionsDisplay.setDirections(response);
+      mapTitle.innerHTML = 'Travel time 8 minutes'
+      mapTitle.style.background = '#5E6B77'
+
 
       for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
       }
       markers = []
       addMarker(origin, 'images/MapView_LocationPointer_supersmall.png')
-      addMarker(destinationLocation, {
-        url: 'images/RouteFlag_supersmall.png',
-        anchor: new google.maps.Point(-1, 28),
-      })
+      addMarker(destinationLocation, 'images/RouteFlag_supersmall.png')
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -146,10 +152,24 @@ function addMarker(position, icon) {
   }));
 }
 
-var el = document.getElementById('someel')
+function start() {
+  mapTitle.innerHTML = 'Leave in 1 minute'
+  document.getElementById('ok').style.display = 'none'
+  window.setTimeout(function() {
+    App.load('page4');
+    window.setTimeout(function() {
+      App.load('page5')
+      window.setTimeout(function() {
+        App.load('home')
+      }, 2 * 1000)
+    }, 2 * 1000)
+  }, 2 * 1000)
+}
+
+var el = document.getElementById('home')
 swipedetect(el, function(swipedir)
 {
-    swipedir contains either "none", "left", "right", "top", or "down"
+    // swipedir contains either "none", "left", "right", "top", or "down"
     App.controller('home', function (page) {
   // put stuff here
     });
@@ -160,14 +180,10 @@ swipedetect(el, function(swipedir)
     if (swipedir =='right')
     {
         alert('You just swiped right!')
-        App.controller('map', function (page) {
-        setTimeout(initMap, 0) //wait for #map render
-        });
     }
+})
 
-// try {
-  // App.restore();
-// } catch (err) {
-  App.load('home');
-// }
-}
+App.controller('map', function (page) {
+  setTimeout(initMap, 0) //wait for #map render
+});
+App.load('home');
