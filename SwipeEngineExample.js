@@ -50,6 +50,19 @@ var el = document.getElementById('someel')
 swipedetect(el, function(swipedir){
     swipedir contains either "none", "left", "right", "top", or "down"
     if (swipedir =='left')
+    {
         alert('You just swiped left!')
+        //Add moving to addresswindow here
+    }
+    if (swipedir =='right')
+    {
+        alert('You just swiped right!')
+        //Add moving to mapwindow here
+    }
+    if (swipedir =='down')
+    {
+        alert('You just swiped down!')
+        //Add moving to preferences here
+    }
 })
-*/
+                        */
