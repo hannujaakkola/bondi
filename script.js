@@ -1,12 +1,38 @@
-function mapReady() {}
+var directionsService
+var directionsDisplay
+var stopLocations = []
+var destination
+var destinationLocation
+
+function addDestination() {
+  destination = document.getElementById('destination').value + ', helsinki'
+}
+
+function mapReady() {
+  stopLocations = [
+    new google.maps.LatLng(60.166948, 24.962423),
+    new google.maps.LatLng(60.167551, 24.960503),
+    new google.maps.LatLng(60.168165, 24.958625),
+    new google.maps.LatLng(60.168516, 24.957427),
+    new google.maps.LatLng(60.168932, 24.956864),
+    new google.maps.LatLng(60.169165, 24.956416),
+    new google.maps.LatLng(60.169121, 24.954517),
+    new google.maps.LatLng(60.169138, 24.952908),
+    new google.maps.LatLng(60.169103, 24.951580),
+    new google.maps.LatLng(60.169006, 24.950132),
+    new google.maps.LatLng(60.168985, 24.948665),
+    new google.maps.LatLng(60.168933, 24.946562),
+    new google.maps.LatLng(60.168894, 24.944539),
+    new google.maps.LatLng(60.168752, 24.941609),
+  ]
+}
 
 function initMap() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
   var geocoder = new google.maps.Geocoder()
 
-  // geocode(geocoder, 'Pikku Satamakatu 3-5, helsinki')
-  // geocode(geocoder, destination)
+  geocode(geocoder, destination)
 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -15,43 +41,54 @@ function initMap() {
   });
   directionsDisplay.setMap(map);
 
-  calculateAndDisplayRoute(directionsService, directionsDisplay);
+  google.maps.event.addListener(map, "click", function (e) {
+    destinationLocation = e.latLng
+
+    var stop = calculateStop(destinationLocation)
+    calculateAndDisplayRoute(stop);
+});
+
 }
 
+function calculateStop(endLocation) {
+  var shortestDistance
+  var stop
+  stopLocations.map(function(stopLocation) {
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(endLocation, stopLocation)
 
-var testLocations = []
+    if (!shortestDistance || distance < shortestDistance) {
+      shortestDistance = distance
+      stop = stopLocation
+    }
+  })
+
+  return stop
+}
+
 function geocode(geocoder, address) {
   geocoder.geocode({ 'address': address }, function (response, status) {
-      console.log(response);
     if (status == google.maps.GeocoderStatus.OK) {
-      testLocations.push(response[0])
-      if (testLocations.length === 2) {
-        var test = google.maps.geometry.spherical.computeDistanceBetween(testLocations[0].geometry.location, testLocations[1].geometry.location)
-        console.log(test);
-      }
+      destinationLocation = response[0].geometry.location
+      var stop = calculateStop(response[0].geometry.location)
+
+      calculateAndDisplayRoute(stop);
     }
   })
 }
 
-function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+function calculateAndDisplayRoute(stop) {
   directionsService.route({
-    origin: 'Pikku Satamakatu 3-5, helsinki',
-    waypoints: [{ location: 'kanavakatu 3, helsinki' }, { location: 'Pohjoisesplanadi 39, helsinki' }],
-    destination: destination,
+    origin: new google.maps.LatLng(60.165873, 24.966461),
+    waypoints: [{ location: new google.maps.LatLng(60.165622, 24.966118) }, { location: stop }],
+    destination: destinationLocation,
     travelMode: 'WALKING'
   }, function(response, status) {
-    console.log(response);
     if (status === 'OK') {
       directionsDisplay.setDirections(response);
     } else {
       window.alert('Directions request failed due to ' + status);
     }
   });
-}
-
-var destination
-function addDestination() {
-  destination = document.getElementById('destination').value
 }
 
 App.controller('home', function (page) {
