@@ -44,3 +44,12 @@ function swipedetect(el, callback){
         e.preventDefault()
     }, false)
 }
+//USAGE:
+/*
+var el = document.getElementById('someel')
+swipedetect(el, function(swipedir){
+    swipedir contains either "none", "left", "right", "top", or "down"
+    if (swipedir =='left')
+        alert('You just swiped left!')
+})
+*/
