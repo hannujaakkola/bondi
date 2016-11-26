@@ -7,6 +7,8 @@ var destinationLocation
 var map
 var mapTitle
 
+
+
 function addDestination() {
   destination = document.getElementById('destination').value + ', helsinki'
 }
@@ -137,7 +139,6 @@ function calculateAndDisplayRoute(stop) {
     }
   });
 }
-
 var markers = []
 function addMarker(position, icon) {
   markers.push(new google.maps.Marker({
@@ -147,20 +148,28 @@ function addMarker(position, icon) {
   }));
 }
 
-App.controller('home', function (page) {
+var el = document.getElementById('someel')
+swipedetect(el, function(swipedir)
+{
+    swipedir contains either "none", "left", "right", "top", or "down"
+    App.controller('home', function (page) {
   // put stuff here
-});
+    });
 
-App.controller('page2', function (page) {
+    App.controller('page2', function (page) {
   // put stuff here
-});
-
-App.controller('map', function (page) {
-  setTimeout(initMap, 0) //wait for #map render
-});
+    });
+    if (swipedir =='right')
+    {
+        alert('You just swiped right!')
+        App.controller('map', function (page) {
+        setTimeout(initMap, 0) //wait for #map render
+        });
+    }
 
 // try {
   // App.restore();
 // } catch (err) {
   App.load('home');
 // }
+}
