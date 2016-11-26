@@ -58,6 +58,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
+    disableDefaultUI: true,
     center: {lat: 60.1656706, lng: 24.9650129},
     styles: [{"elementType":"geometry","stylers":[{"color":"#f5f5f5"}]},{"elementType":"labels","stylers":[{"visibility":"off"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#f5f5f5"}]},{"featureType":"administrative.land_parcel","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"administrative.neighborhood","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#eeeeee"}]},{"featureType":"poi","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.business","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#e5e5e5"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#ffffff"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#dadada"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#e5e5e5"}]},{"featureType":"transit.station","elementType":"geometry","stylers":[{"color":"#eeeeee"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#c9c9c9"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#8DB0FF"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]}]
   });
@@ -111,6 +112,9 @@ function calculateAndDisplayBusRoute() {
   }, function(response, status) {
     if (status === 'OK') {
       busRouteDisplay.setDirections(response);
+
+      addBus(response.routes[0].overview_path, 0)
+      addBus(response.routes[0].overview_path, parseInt(response.routes[0].overview_path.length / 2))
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -150,6 +154,28 @@ function addMarker(position, icon) {
     map: map,
     icon: icon,
   }));
+}
+
+var buses = []
+function addBus(route, busLocation) {
+  if (buses.length >= 2) {
+    return
+  }
+
+  var bus = new google.maps.Marker({
+    position: route[busLocation],
+    map: map,
+    icon: 'images/BondiBusGreen_SuperSmall.png',
+  });
+  buses.push(bus)
+
+  window.setInterval(function() {
+    busLocation += parseInt(Math.random() + .8) // 80% of time
+    if (busLocation > route.length) {
+      busLocation = 0
+    }
+    bus.setPosition(route[busLocation])
+  }, Math.random() * 1000 + 1000)
 }
 
 function start() {
