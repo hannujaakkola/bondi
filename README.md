@@ -1,3 +1,3 @@
 # bondi
 
-AI drives bus application for Junction 2016
+Demo for an AI driven bus application for [Junction 2016](https://hackjunction.com/)
